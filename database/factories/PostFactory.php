@@ -19,7 +19,7 @@ class PostFactory extends Factory
         return [
             'name' => fake()->jobTitle(),
             'avatar' => fake()->imageUrl,
-            'desk' => fake()->realText(100),
+            'desc' => fake()->realText(100),
             'status' => fake()->boolean
         ];
     }
