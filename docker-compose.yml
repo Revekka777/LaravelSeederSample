@@ -1,0 +1,45 @@
+version: "3"
+
+networks:
+  laravel:
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: './docker/php/Dockerfile'
+    container_name: 'php_LaraSeeder'
+    ports:
+      - "9000:9000"
+    volumes:
+      - './:/var/www/html'
+    networks:
+      - laravel
+
+  nginx:
+    build:
+      context: .
+      dockerfile: './docker/nginx/Dockerfile'
+    container_name: 'nginx_LaraSeeder'
+    ports:
+      - "80:80"
+    volumes:
+      - './:/var/www/html'
+    networks:
+      - laravel
+
+  db:
+    image: postgres:14.3
+    container_name: 'pgsql_LaraSeeder'
+    restart: always
+    tty: true
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: laravel
+    ports:
+      - "5432:5432"
+    volumes:
+      - './docker/postgres/pgdata:/var/lib/postgresql/data'
+    networks:
+      - laravel
